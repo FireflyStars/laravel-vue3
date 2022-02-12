@@ -8,5 +8,5 @@
 - php artisan serve
 
 ## Default Account Credentials
-- Email: test@gmail.com
+- Email: gotodev7@gmail.com
 - Password: 12345678
