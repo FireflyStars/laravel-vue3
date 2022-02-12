@@ -4,6 +4,7 @@
 - nmp install Or yarn
 - php artisan db:create laravel_vue
 - php artisan migrate
+- php artisan db:seed
 - php artisan serve
 
 ## Default Account Credentials
