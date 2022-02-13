@@ -30,7 +30,7 @@
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
 import { useCookies } from "vue3-cookies";
-
+import { onMounted } from 'vue';
 export default {
     setup: () => {
         const { cookies } = useCookies();
@@ -64,18 +64,18 @@ export default {
             SetSubjects: 'SetUserSubject', // map `this.SetUserSubject()` to `this.$store.dispatch('SetUserSubject')`,
             Logout: 'LOGOUT',
         }),
-        loadSubjects(){
-            axios.get('/sanctum/csrf-cookie').then(response => {
-                axios.get('/api/subjects').then( res => {
+        async loadSubjects(){
+            await axios.get('/sanctum/csrf-cookie').then(async () => {
+                await axios.get('/api/subjects').then( res => {
                     this.SetSubjects(res.data.data);
                 }).catch(error => {
                     console.log(error);
                 })
             });
         },
-        logout(){
-            axios.get('/sanctum/csrf-cookie').then(response => {
-                axios.post(this.logoutUrl).then( res => {
+        async logout(){
+            await axios.get('/sanctum/csrf-cookie').then( async () => {
+                await axios.post(this.logoutUrl).then( res => {
                     this.$router.push({ name: 'Login' });
                     this.Logout();
                 }).catch(error => {

@@ -71,13 +71,13 @@ export default {
         ...mapActions({
             Login: 'LOGIN',
         }),        
-        signin(){
+        async signin(){
             // if(this.$cookies.get('isAuthenticated')){
             //     this.$router.push('dashboard');
             // }
             this.isLoading = true;
-            axios.get('/sanctum/csrf-cookie').then(() => {
-                axios.post(this.loginSubmitUrl, {
+            await axios.get('/sanctum/csrf-cookie').then(async () => {
+                await axios.post(this.loginSubmitUrl, {
                     'email': this.email,
                     'password': this.password
                 }).then( () => {
@@ -96,9 +96,9 @@ export default {
                 console.log(error);
             });
         },
-        getUserInfo(){
-            axios.get('/sanctum/csrf-cookie').then(() => {
-                axios.get('api/user').then( response => {
+        async getUserInfo(){
+            await axios.get('/sanctum/csrf-cookie').then(async () => {
+                await axios.get('api/user').then( response => {
                     this.Login(response.data);
                     this.isLoading = false;
                     this.$router.push('dashboard');
