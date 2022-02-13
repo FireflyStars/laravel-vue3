@@ -28,51 +28,38 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex';
+import { mapActions, useStore } from 'vuex';
 import { useCookies } from "vue3-cookies";
-
+import { computed, onMounted } from 'vue';
 export default {
     setup: () => {
+        const store = useStore();
         const { cookies } = useCookies();
-        return {
-            userInfo : cookies.get('userInfo')
-        }
-    },
-    data(){
-        return{
-            logoutUrl: '/logout'
-        }
-    },
-    computed:{
-        ...mapGetters({
-            // map `this.getSubject` to `this.$store.getters.getSubject`
-            subjects: 'getSubject',            
-        }),
-        ...mapState({
-            // map this.userInfo to store.state.userInfo
-            userInfo: state => state.userInfo,            
-        })
-    },
-    mounted(){
-        if(this.subjects.length == 0){
-            this.loadSubjects();
-        }
 
-    },
-    methods: {
-        ...mapActions({
-            SetSubjects: 'SetUserSubject', // map `this.SetUserSubject()` to `this.$store.dispatch('SetUserSubject')`,
-            Logout: 'LOGOUT',
-        }),
-        async loadSubjects(){
+        const loadSubjects = async () => {
             await axios.get('/sanctum/csrf-cookie').then(async () => {
                 await axios.get('/api/subjects').then( response => {
-                    this.SetSubjects(response.data.data);
+                    store.dispatch('SetUserSubject', response.data.data);
                 }).catch(error => {
                     console.log(error);
                 })
             });
-        },
+        };
+        onMounted(() => {
+          loadSubjects();
+        });
+
+        return {
+            logoutUrl: '/logout',
+            userInfo : store.state.userInfo != null ? store.state.userInfo : cookies.get('userInfo'),
+            subjects : computed(() => store.getters.getSubject),
+        }
+    },
+
+    methods: {
+        ...mapActions({
+            Logout: 'LOGOUT',
+        }),
         async logout(){
             await axios.get('/sanctum/csrf-cookie').then( async () => {
                 await axios.post(this.logoutUrl).then( () => {
