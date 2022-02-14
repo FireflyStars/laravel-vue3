@@ -72,9 +72,6 @@ export default {
             Login: 'LOGIN',
         }),        
         async signin(){
-            // if(this.$cookies.get('isAuthenticated')){
-            //     this.$router.push('dashboard');
-            // }
             this.isLoading = true;
             await axios.get('/sanctum/csrf-cookie').then(async () => {
                 await axios.post(this.loginSubmitUrl, {

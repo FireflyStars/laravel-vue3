@@ -12,8 +12,6 @@ const store = createStore({
         userInfo: null
     },
     mutations: {
-        // we can use the ES2015 computed property name feature
-        // to use a constant as the function name
         [LOGIN] (state, userInfo) {
             cookies.set('userInfo', userInfo);
             state.userInfo = userInfo;
