@@ -1,4 +1,4 @@
-## I'd like to discuss with you via mail
+## My Opinion
 - my email address is gotodev7@gmail.com. Since I agree with 12 usd, I'd like to work with you directly. so I can save fee by upwork. if you don't mind, please send me email. Thank you.
 ## How to set up the project?
 - `SANCTUM_STATEFUL_DOMAINS=localhost:8000` add this code to .env file
