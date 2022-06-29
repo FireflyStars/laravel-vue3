@@ -1,4 +1,3 @@
-## My Opinion
 ## How to set up the project?
 - `SANCTUM_STATEFUL_DOMAINS=localhost:8000` add this code to .env file
 - composer install
